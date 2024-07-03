@@ -9,7 +9,8 @@ console.log("1: adição:");
 console.log("2: subtração:");
 console.log("3: multiplicação:");
 console.log("4: divisão:");
-console.log("5: porcentagem");
+console.log("5: porcentagem:");
+console.log("6: Encerrando o programa:")
 
 process.stdin.on("data", function(data) {
     let input = +data.toString().trim()
