@@ -1,46 +1,101 @@
 let numero1;
 let numero2;
-let resultados = 0;
 let opcao = 0;
+let adicao = false;
+let subtracao = false;
+let multiplicacao = false;
+let divisao = false;
+let porcentagem = false;
 
-console.log("Digite 2 números que deseja fazer os cálculos: ");
-console.log("Escolha uma das operações abaixo: ");
-console.log("1: adição:");
-console.log("2: subtração:");
-console.log("3: multiplicação:");
-console.log("4: divisão:");
-console.log("5: porcentagem:");
-console.log("6: Encerrando o programa:")
+function mensagem() {
+  console.log("Escolha uma das opções operações abaixo:");
+  console.log("1: Adição");
+  console.log("2: Subtração");
+  console.log("3: Multiplicação");
+  console.log("4: Divisão");
+  console.log("5: Porcentagem");
+  console.log("6: Sair do programa");
+}
 
-process.stdin.on("data", function(data) {
-    let input = +data.toString().trim()
+mensagem();
 
-    if(!numero1) {
+function digitar() {
+  console.log("Digite 2 números que deseja fazer o cálculo:");
+}
 
-        numero1 = input
-    } else {
-        numero2 = input
+process.stdin.on("data", function (data) {
+  let entrada_usuario = data.toString().trim();
+  let input = parseFloat(entrada_usuario); 
 
-        let i
-        let maior
-        let menor
-
-        if(numero1 > numero2) {
-            maior = numero1
-            menor = numero2
-        } else {
-            maior = numero2
-            menor = numero1
-        }
-
-        console.log(numero1 + numero2);
-        console.log(numero1 - numero2);
-        console.log(numero1 * numero2);
-        console.log(numero1 / numero2);
-        console.log((numero1 /100) * numero2);
-        
-        process.exit()
-
-
+  if (!opcao) {
+    opcao = parseInt(entrada_usuario);
+    switch (opcao) {
+      case 1:
+        digitar();
+        adicao = true;
+        break;
+      case 2:
+        digitar();
+        subtracao = true;
+        break;
+      case 3:
+        digitar();
+        multiplicacao = true;
+        break;
+      case 4:
+        digitar();
+        divisao = true;
+        break;
+      case 5:
+        digitar();
+        porcentagem = true;
+        break;
+      case 6:
+        console.log("Programa encerrado");
+        process.exit();
+        break;
+      default:
+        console.log("Opção inválida. Tente novamente.");
+        mensagem();
+        opcao = 0;
+        break;
     }
-})
+  } else {
+    if (numero1 === undefined) {
+      numero1 = input;
+    } else {
+      numero2 = input;
+
+      if (adicao) {
+        let resultado = numero1 + numero2;
+        console.log(numero1 + " + " + numero2 + " = " + resultado + ".");
+        adicao = false;
+      } else if (subtracao) {
+        let resultado = numero1 - numero2;
+        console.log(numero1 + " - " + numero2 + " = " + resultado + ".");
+        subtracao = false;
+      } else if (multiplicacao) {
+        let resultado = numero1 * numero2;
+        console.log(numero1 + " x " + numero2 + " = " + resultado + ".");
+        multiplicacao = false;
+      } else if (divisao) {
+        if (numero2 === 0) {
+          console.log("Erro: Divisão por zero não é permitida.");
+        } else {
+          let resultado = numero1 / numero2;
+          console.log(numero1 + " / " + numero2 + " = " + resultado + ".");
+        }
+        divisao = false;
+      } else if (porcentagem) {
+        let resultado = ((numero1 / 100) * numero2);
+        console.log(numero1 + " % " + numero2 + " = " + resultado + ".");
+        porcentagem = false;
+      }
+
+      opcao = 0;
+      numero1 = undefined;
+      numero2 = undefined;
+      mensagem();
+    }
+  }
+});
